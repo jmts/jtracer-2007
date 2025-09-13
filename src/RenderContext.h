@@ -1,52 +1,59 @@
 
-#include "Scene.h"
-#include "Cameras.h"
-#include "RenderSettings.h"
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    RenderContext.h                                         //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Provides A Data Structure To Encapsulate The Entire     //
+//          Context Within Which An Image Should Be Rendered.       //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
 #ifndef _RENDERCONTEXT_H_
 #define _RENDERCONTEXT_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#include "Scene.h"
+#include "CameraList.h"
+#include "RenderSettings.h"
+
+#include <ostream>
+
+//////////////////////////////////////////////////////////////////////
 
 class RenderContext
 {
 	private:
 	RenderSettings m_rsRenderSettings;
-	Cameras m_cCameras;
+	CameraList m_cCameras;
 	Scene m_sScene;
 
 	public:
-	RenderContext()
-	{
-
-	}
-
-	RenderContext(const RenderSettings &rsRenderSettings, const Cameras &cCameras, const Scene &sScene) :
+	RenderContext() { }
+	RenderContext(const RenderSettings &rsRenderSettings, const CameraList &cCameras, const Scene &sScene) :
 		m_rsRenderSettings(rsRenderSettings), m_cCameras(cCameras), m_sScene(sScene) {}
 
-	~RenderContext()
-	{
-		
-	}
+	RenderContext& operator=(const RenderContext& rc);
 
-	bool destroy()
-	{
-		m_cCameras.destroy();
-		m_sScene.destroy();
-	}
+	~RenderContext() { }
 
-	RenderSettings getRenderSettings() const
-	{
-		return m_rsRenderSettings;
-	}
+	bool destroy();
 
-	Cameras getCameras() const
-	{
-		return m_cCameras;
-	}
+	const RenderSettings& getRenderSettings() const;
+	bool setRenderSettings(const RenderSettings& rsSettings);
 
-	Scene getScene() const
-	{
-		return m_sScene;
-	}
+	const CameraList& getCameraList() const;
+	bool setCameraList(const CameraList &cCameras);
+
+	const Scene& getScene() const;
+	bool setScene(const Scene &sScene);
+
+	friend std::ostream& operator<<(std::ostream& os, const RenderContext &rc);
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////

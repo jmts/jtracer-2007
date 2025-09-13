@@ -1,6 +1,23 @@
 
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    Color.h                                                 //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Encapsulates Common Colour Operations.                  //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
 #ifndef _COLOR_H_
 #define _COLOR_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#include "Vector3.h"
+
+#include <ostream>
+
+//////////////////////////////////////////////////////////////////////
 
 class Color
 {
@@ -8,75 +25,33 @@ class Color
 	float m_x[3];
 
 	public:
-	Color()
-	{
-		Color &c = *this;
+	Color();
+	Color(float fRed, float fGreen, float fBlue);
 
-		c(0) = 0.0;
-		c(1) = 0.0;
-		c(2) = 0.0;
-	}
+	Color(const Color &d);
+	Color (const Vector3 &v);
 
-	Color(float fRed, float fGreen, float fBlue)
-	{
-		Color &c = *this;
+	float& operator() (unsigned int i);
+	float operator() (unsigned int i) const;
 
-		c(0) = fRed;
-		c(1) = fGreen;
-		c(2) = fBlue;
-	}
+	Color operator+=(const Color &u);
+	const Color operator+(const Color &u) const;
 
-	Color(const Color &d)
-	{
-		Color &c = *this;
-		c(0) = d(0);
-		c(1) = d(1);
-		c(2) = d(2);
-	}
+	Color operator*=(const Color &u);
+	const Color operator*(const Color &u) const;
 
-	float& operator() (unsigned int i)
-	{
-		return m_x[i];
-	}
+	Color& operator*=(float factor);
+	const Color operator*(float factor) const;
 
-	float operator() (unsigned int i) const
-	{
-		return m_x[i];
-	}
+	const Color clip() const;
 
-	Color operator+=(const Color &u)
-	{
-		Color &c = *this;
-		c(0) += u(0);
-		c(1) += u(1);
-		c(2) += u(2);
+	bool nonZero() const;
 
-		return *this;
-	}
-
-	const Color operator+(const Color &u) const
-	{
-		return Color(*this) += u;
-	}
-
-	const Color clip() const
-	{
-		const Color &c = *this;
-
-		float fRed   = c(0);
-		float fGreen = c(1);
-		float fBlue  = c(2);
-
-		fRed   = (fRed   < 0.0f) ? 0.0f : fRed;
-		fGreen = (fGreen < 0.0f) ? 0.0f : fGreen;
-		fBlue  = (fBlue  < 0.0f) ? 0.0f : fBlue;
-
-		fRed   = (fRed   > 1.0f) ? 1.0f : fRed;
-		fGreen = (fGreen > 1.0f) ? 1.0f : fGreen;
-		fBlue  = (fBlue  > 1.0f) ? 1.0f : fBlue;
-
-		return Color(fRed, fGreen, fBlue);
-	}
+	friend std::ostream& operator<<(std::ostream& os, const Color &c);
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////

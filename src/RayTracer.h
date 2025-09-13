@@ -1,51 +1,59 @@
 
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    RayTracer.h                                             //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Implements The Core Ray Tracing System. Provides Traces //
+//          Of Primary (And Subsequent Secondary) Rays Throughout   //
+//          A Scene.                                                //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
 #ifndef _RAYTRACER_H_
 #define _RAYTRACER_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#include "Scene.h"
+#include "Color.h"
+#include "Ray.h"
+#include "Primitive.h"
+#include "Intersect.h"
+#include "TraceStats.h"
+
+//////////////////////////////////////////////////////////////////////
 
 class RayTracer
 {
 	private:
 	Scene m_sScene;
+
+	Color m_cAmbient;
 	Color m_cInfinity;
 
+	TraceStats m_tsStats;
+
 	public:
-	RayTracer() {}
+	RayTracer() { }
 
-	bool intersect(const Ray &rRay, const Primitive *pPrimitive, Intersect &iIntersect)
-	{
-		Transform tForward = pPrimitive->getTransform();
-		Transform tInverse = tForward.inverse();
-	
-		Ray rRayInverse = tInverse * rRay;
-	
-		Intersect iIntersectInverse;
-		if (pPrimitive->intersect(rRayInverse, iIntersectInverse))
-		{
-			iIntersect = tForward * iIntersectInverse;
-			return true;
-		}
-	
-		return false;
-	}
+	Color traceRay(const Ray &rRay, int nRecursions);
 
-	Color traceRay(Ray rRay, int nRecursions)
-	{
-		return Color(m_cInfinity);
-	}
+	Color traceRay(const Ray &rRay, int nRecursions, const IntersectConditions &icExclude);
 
-	bool setScene(const Scene &sScene)
-	{
-		m_sScene = sScene;
+	Color traceShadowRay(const Ray &rRay, const Light *lLight, const IntersectConditions &icExclude);
 
-		return true;
-	}
+	Ray calcReflectionRay(const Vector3 &vPoint, const Vector3 &vIncident, const Vector3 &vNormal);
 
-	bool setInfinityColor(const Color &cInfinity)
-	{
-		m_cInfinity = cInfinity;
+	bool setScene(const Scene &sScene);
+	bool setAmbientLight(const Color &cAmbient);
+	bool setInfinityColor(const Color &cInfinity);
 
-		return true;
-	}
+	const TraceStats& getStats() const;
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////

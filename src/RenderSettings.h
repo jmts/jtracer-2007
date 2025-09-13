@@ -1,170 +1,73 @@
 
-#include "Color.h"
-
-#include <cstring>
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    RenderSettings.h                                        //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Provides A Data Structure For Handling Rendering        //
+//          Properties.                                             //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
 #ifndef _RENDERSETTINGS_H_
 #define _RENDERSETTINGS_H_
 
+//////////////////////////////////////////////////////////////////////
+
+#include "Color.h"
+
+#include <ostream>
+
+//////////////////////////////////////////////////////////////////////
+
 class RenderSettings
 {
 	private:
-	int m_nWidth;  // Canvas Dimensions
+	int m_nWidth;			// Canvas Dimensions
 	int m_nHeight;
 
-	int m_nRecursions;
+	int m_nRecursions;		// Recurse Depth
 
-	char *m_szActiveCamera;
+	char *m_szActiveCamera;	// Render Viewpoint Name
 
-	char *m_szFileName;
+	char *m_szFileName;		// Output Filename
 
-	Color m_cInfinity;
+	Color m_cAmbient;		// Ambient Light Intensity
+	Color m_cInfinity;		// Colour At Infinity
 
 	public:
-	RenderSettings()
-	{
-		m_nWidth = 1;
-		m_nHeight = 1;
+	RenderSettings();
+	RenderSettings(const RenderSettings &rs);
+	RenderSettings& operator=(const RenderSettings& rs);
 
-		m_nRecursions = 1;
+	~RenderSettings();
 
-		m_szActiveCamera = 0;
+	const char* getActiveCamera() const;
+	bool setActiveCamera(const char *szActiveCamera);
 
-		m_szFileName = 0;
+	const char* getFileName() const;
+	bool setFileName(const char *szFileName);
 
-		m_cInfinity = Color(0.0f, 0.0f, 0.0f);
-	}
+	bool setWidth(int nWidth);
+	int getWidth() const;
 
-	RenderSettings(const RenderSettings &rs)
-	{
-		m_nWidth = rs.getWidth();
-		m_nHeight = rs.getHeight();
+	bool setHeight(int nHeight);
+	int getHeight() const;
 
-		m_szActiveCamera = 0;
-		m_szFileName = 0;
+	bool setRecursions(int nRecursions);
+	int getRecursions() const;
 
-		if (rs.getActiveCamera())
-		{
-			int iLength = std::strlen(rs.getActiveCamera());
-			m_szActiveCamera = new char[iLength + 1];
-			std::strcpy(m_szActiveCamera, rs.getActiveCamera());
-		}
+	bool setAmbientLight(const Color &cAmbient);
+	const Color& getAmbientLight() const;
 
-		if (rs.getFileName())
-		{
-			int iLength = std::strlen(rs.getFileName());
-			m_szFileName = new char[iLength + 1];
-			std::strcpy(m_szFileName, rs.getFileName());
-		}
+	bool setInfinityColor(const Color &cInfinity);
+	const Color& getInfinityColor() const;
 
-		m_cInfinity = rs.getInfinityColor();
-	}
-
-	~RenderSettings()
-	{
-		if (m_szActiveCamera)
-			delete [] m_szActiveCamera;
-
-		if (m_szFileName)
-			delete [] m_szFileName;
-	}
-
-	const char *getActiveCamera() const
-	{
-		return m_szActiveCamera;
-	}
-
-	bool setActiveCamera(const char *szActiveCamera)
-	{
-		if (!szActiveCamera || std::strlen(szActiveCamera) == 0)
-			return false;
-
-		if (m_szActiveCamera)
-			delete [] m_szActiveCamera;
-
-		int iLength = std::strlen(szActiveCamera);
-		m_szActiveCamera = new char[iLength + 1];
-		std::strcpy(m_szActiveCamera, szActiveCamera);
-
-		return true;
-	}
-
-	const char *getFileName() const
-	{
-		return m_szFileName;
-	}
-
-	bool setFileName(const char *szFileName)
-	{
-		if (!szFileName || std::strlen(szFileName) == 0)
-			return false;
-
-		if (m_szFileName)
-			delete [] m_szFileName;
-
-		int iLength = std::strlen(szFileName);
-		m_szFileName = new char[iLength + 1];
-		std::strcpy(m_szFileName, szFileName);
-
-		return true;
-	}
-
-	bool setWidth(int nWidth)
-	{
-		if (nWidth < 1)
-			return false;
-
-		m_nWidth = nWidth;
-
-		return true;
-	}
-
-	int getWidth() const
-	{
-		return m_nWidth;
-	}
-
-	bool setHeight(int nHeight)
-	{
-		if (nHeight < 1)
-			return false;
-
-		m_nHeight = nHeight;
-
-		return true;
-	}
-
-	int getHeight() const
-	{
-		return m_nHeight;
-	}
-
-	bool setRecursions(int nRecursions)
-	{
-		if (nRecursions < 1)
-			return false;
-
-		m_nRecursions = nRecursions;
-
-		return true;
-	}
-
-	int getRecursions() const
-	{
-		return m_nRecursions;
-	}
-
-	bool setInfinityColor(const Color &cInfinity)
-	{
-		m_cInfinity = cInfinity;
-
-		return true;
-	}
-
-	Color getInfinityColor() const
-	{
-		return m_cInfinity;
-	}
+	friend std::ostream& operator<<(std::ostream& os, const RenderSettings &rs);
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////

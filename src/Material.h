@@ -1,8 +1,23 @@
 
-#include "Color.h"
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    Material.h                                              //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Encapsulates Information Required To Describe The       //
+//          Material A Primitive Is Made Up Of.                     //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
 #ifndef _MATERIAL_H_
 #define _MATERIAL_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#include "Color.h"
+#include <ostream>
+
+//////////////////////////////////////////////////////////////////////
 
 class Material
 {
@@ -10,113 +25,48 @@ class Material
 	Color m_cPigment;
 
 	Color m_cAmbient;
-	
+
 	Color m_cDiffuse;
 	float m_fDiffuse;
-	
+
 	Color m_cSpecular;
 	float m_fSpecular;
 
+	float m_fReflection;
+
+	//bool m_bMetallic;
+
 	public:
-	Material()
-	{
-		m_fDiffuse = 0.0f;
-		m_fSpecular = 0.0f;
-	}
+	Material();
+	Material(const Color &cPigment, const Color& cAmbient, const Color &cDiffuse, const Color &cSpecular);
+	Material(const Color &cPigment, const Color& cAmbient, const Color &cDiffuse, float kDiffuse, const Color &cSpecular, float kSpecular);
 
-	Material(const Color &cPigment, const Color& cAmbient, const Color &cDiffuse, const Color &cSpecular)
-	{
-		m_cPigment = cPigment;
-		m_cAmbient = cAmbient;
-		m_cDiffuse = cDiffuse;
-		m_cSpecular = cSpecular;
+	bool setPigment(const Color &cPigment);
+	const Color& getPigment() const;
 
-		m_fDiffuse = 1.0f;
-		m_fSpecular = 1.0f;
-	}
+	bool setAmbientColor(const Color &cAmbient);
+	const Color& getAmbientColor() const;
 
-	Material(const Color &cPigment, const Color& cAmbient, const Color &cDiffuse, float kDiffuse, const Color &cSpecular, float kSpecular)
-	{
-		m_cPigment = cPigment;
-		m_cAmbient = cAmbient;
-		m_cDiffuse = cDiffuse;
-		m_cSpecular = cSpecular;
+	bool setDiffuseK(float kDiffuse);
+	float getDiffuseK() const;
 
-		m_fDiffuse = kDiffuse;
-		m_fSpecular = kSpecular;
-	}
+	bool setDiffuseColor(const Color &cDiffuse);
+	const Color& getDiffuseColor() const;
 
-	bool setPigment(const Color &cPigment)
-	{
-		m_cPigment = cPigment;
+	bool setSpecularK(float kSpecular);
+	float getSpecularK() const;
 
-		return true;
-	}
+	bool setSpecularColor(const Color &cSpecular);
+	const Color& getSpecularColor() const;
 
-	Color getPigment() const
-	{
-		return m_cPigment;
-	}
+	bool setReflectionK(float kReflection);
+	float getReflectionK() const;
 
-	bool setAmbientColor(const Color &cAmbient)
-	{
-		m_cAmbient = cAmbient;
-
-		return true;
-	}
-
-	Color getAmbientColor() const
-	{
-		return m_cAmbient;
-	}
-
-	bool setDiffuseK(float kDiffuse)
-	{
-		m_fDiffuse = kDiffuse;
-
-		return true;
-	}
-
-	float getDiffuseK() const
-	{
-		return m_fDiffuse;
-	}
-
-	bool setDiffuseColor(const Color &cDiffuse)
-	{
-		m_cDiffuse = cDiffuse;
-
-		return true;
-	}
-
-	Color getDiffuseColor() const
-	{
-		return m_cDiffuse;
-	}
-
-	bool setSpecularK(float kSpecular)
-	{
-		m_fSpecular = kSpecular;
-
-		return true;
-	}
-
-	float getSpecularK() const
-	{
-		return m_fSpecular;
-	}
-
-	bool setSpecularColor(const Color &cSpecular)
-	{
-		m_cSpecular = cSpecular;
-
-		return true;
-	}
-
-	Color getSpecularColor() const
-	{
-		return m_cSpecular;
-	}
+	friend std::ostream& operator<<(std::ostream& os, const Material &m);
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////

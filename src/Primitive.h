@@ -1,11 +1,25 @@
 
-#include "Ray.h"
-#include "Intersect.h"
-#include "Transform.h"
-#include "Material.h"
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    Primitive.h                                             //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Provides A Generalised Interface To Enable The          //
+//          Implementation Of A Variety Of Geometric Primitives.    //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
 #ifndef _PRIMITIVE_H_
 #define _PRIMITIVE_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#include "Transform.h"
+#include "Material.h"
+#include "Ray.h"
+#include "Intersect.h"
+
+//////////////////////////////////////////////////////////////////////
 
 class Primitive
 {
@@ -16,29 +30,17 @@ class Primitive
 	public:
 	Primitive() {}
 
-	virtual bool intersect(const Ray& rRay, Intersect &iIntersect) const = 0;
+	virtual bool intersect(const Ray& rRay, Intersect &iIntersect, const IntersectConditions &icExclude) const = 0;
 
-	Transform getTransform() const
-	{
-		return m_tTransform;
-	}
+	const Transform& getTransform() const;
+	bool setTransform(const Transform &tTransform);
 
-	bool setTransform(const Transform &tTransform)
-	{
-		m_tTransform = tTransform;
-		return true;
-	}
-
-	Material getMaterial() const
-	{
-		return m_mMaterial;
-	}
-
-	bool setMaterial(const Material &mMaterial)
-	{
-		m_mMaterial = mMaterial;
-		return true;
-	}
+	const Material& getMaterial() const;
+	bool setMaterial(const Material &mMaterial);
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////

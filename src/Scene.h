@@ -1,9 +1,27 @@
 
-#include "Light.h"
-#include "Primitive.h"
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    Scene.h                                                 //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Acts As A Container Class For The Light Sources And     //
+//          Primitive Objects That Describe A Scene.                //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
 #ifndef _SCENE_H_
 #define _SCENE_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#include "Light.h"
+#include "Primitive.h"
+
+#include <vector>
+
+#include <ostream>
+
+//////////////////////////////////////////////////////////////////////
 
 class Scene
 {
@@ -12,64 +30,27 @@ class Scene
 	std::vector<Primitive*> m_vPrimitives;
 
 	public:
-	Scene()
-	{
-		m_vLights.clear();
-
-		m_vPrimitives.clear();
-	}
-
+	Scene();
 	Scene(const Scene &s) : m_vLights(s.m_vLights), m_vPrimitives(s.m_vPrimitives) {}
+	Scene& operator=(const Scene& s);
 
-	~Scene()
-	{
-		
-	}
+	~Scene() { }
 
-	bool destroy()
-	{
-		for (unsigned int i = 0; i < m_vLights.size(); i++)
-			delete m_vLights.at(i);
+	bool destroy();
 
-		for (unsigned int i = 0; i < m_vPrimitives.size(); i++)
-			delete m_vPrimitives.at(i);
+	int addLight(Light *p);
+	int getNumLights() const;
+	Light* getLight(int i);
 
-		return true;
-	}
+	bool addPrimitive(Primitive *p);
+	int getNumPrimitives() const;
+	Primitive* getPrimitive(int i);
 
-	int addLight(Light *p)
-	{
-		m_vLights.push_back(p);
-	
-		return 0;
-	}
-
-	int getNumLights()
-	{
-		return m_vLights.size();
-	}
-
-	Light* getLight(int i)
-	{
-		return m_vLights.at(i);
-	}
-
-	bool addPrimitive(Primitive *p)
-	{
-		m_vPrimitives.push_back(p);
-	
-		return true;
-	}
-
-	int getNumPrimitives()
-	{
-		return m_vPrimitives.size();
-	}
-
-	Primitive* getPrimitive(int i)
-	{
-		return m_vPrimitives.at(i);
-	}
+	friend std::ostream& operator<<(std::ostream& os, const Scene &s);
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////

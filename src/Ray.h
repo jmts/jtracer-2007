@@ -1,8 +1,21 @@
 
-#include "Vector3.h"
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// File:    Ray.h                                                   //
+// Author:  Joel Sheehan (11334071)                                 //
+// Date:    November 12, 2007                                       //
+// Purpose: Provides An Implementation Of A Ray For The System.     //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
 #ifndef _RAY_H_
 #define _RAY_H_
+
+//////////////////////////////////////////////////////////////////////
+
+#include "Vector3.h"
+
+//////////////////////////////////////////////////////////////////////
 
 class Ray
 {
@@ -11,29 +24,16 @@ class Ray
 	Vector3 m_vDirection;
 
 	public:
-	Ray() { }
+	Ray() : m_vOrigin(0,0,0), m_vDirection(0,0,1) { }
+	Ray(const Vector3 &vOrigin, const Vector3 &vDirection);
+	Ray(const Ray& rRay);
 
-	Ray(const Vector3 &vOrigin, const Vector3 &vDirection)
-	{
-		m_vOrigin = vOrigin;
-		m_vDirection = vDirection.unit();
-	}
-
-	Ray(const Ray& rRay)
-	{
-		m_vOrigin = rRay.m_vOrigin;
-		m_vDirection = rRay.m_vDirection;
-	}
-
-	Vector3 getOrigin() const
-	{
-		return m_vOrigin;
-	}
-
-	Vector3 getDirection() const
-	{
-		return m_vDirection;
-	}
+	const Vector3& getOrigin() const;
+	const Vector3& getDirection() const;
 };
 
+//////////////////////////////////////////////////////////////////////
+
 #endif
+
+//////////////////////////////////////////////////////////////////////
