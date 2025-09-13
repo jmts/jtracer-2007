@@ -13,7 +13,7 @@
 
 //////////////////////////////////////////////////////////////////////
 
-#include "..\Surface.h"
+#include "..\FileSurfaceWriter.h"
 
 #include <cstdio>
 
@@ -45,19 +45,78 @@ typedef struct tagBMPINFOHEADER {
 
 //////////////////////////////////////////////////////////////////////
 
-class BitmapWriter
+class BitmapWriter : public FileSurfaceWriter
 {
 	private:
-	static unsigned char clip(int x);
+	unsigned char clip(int x);
 
-	static bool writeFileHeader(std::FILE *fp, int nWidth, int nHeight);
+	bool writeFileHeader(int nWidth, int nHeight);
 
-	static bool writeInfoHeader(std::FILE *fp, int nWidth, int nHeight);
+	bool writeInfoHeader(int nWidth, int nHeight);
 
-	static bool writeFileData(std::FILE *fp, const Surface *sSurface);
+	bool writeFileData(const Surface *sSurface);
+
+	std::FILE *m_fp;
 
 	public:
-	static bool write(const Surface *sSurface, const char *szFileName);
+	BitmapWriter()
+	{
+		m_fp = 0;
+	}
+
+	~BitmapWriter()
+	{
+		close();
+	}
+
+	bool open(const char *szFileName)
+	{
+		if (!szFileName || m_fp)
+			return false;
+
+		m_fp = std::fopen(szFileName, "wb");
+		if (!m_fp)
+			return false;
+
+		return true;
+	}
+
+	bool write(const Surface *sSurface)
+	{
+		if (!m_fp || !sSurface)
+			return false;
+
+		fseek(m_fp, 0, SEEK_SET);
+
+		writeFileHeader(sSurface->getWidth(), sSurface->getHeight());
+		writeInfoHeader(sSurface->getWidth(), sSurface->getHeight());
+		writeFileData  (sSurface);
+
+		return true;
+	}
+
+	bool write(const Surface *sSurface, const char *szFileName)
+	{
+		if (!open(szFileName))
+			return false;
+
+		if (!write(sSurface))
+			return false;
+
+		close();
+
+		return true;
+	}
+
+	bool close()
+	{
+		if (!m_fp)
+			return false;
+
+		fclose(m_fp);
+
+		return true;
+	}
 };
 
 //////////////////////////////////////////////////////////////////////

@@ -1,0 +1,85 @@
+
+######################################################################
+# Demonstrates Additive Lighting Using A Selection Of Lights And     #
+# A Sphere. See Also 'spectrum.jts' For A Simpler Example.           #
+######################################################################
+
+render_settings
+{
+	width: 1600;
+	height: 1200;
+	ambient_light: <0.0, 0.0, 0.0>;
+	background: <0.0, 0.0, 0.0>;
+	filename: "flower.bmp";
+}
+
+cameras
+{
+	perspective_camera
+	{
+		position: <0.0, 4.0, 10.0>;
+		look_at: <0.0, 1.0, 0.0>;
+		aspect: 1.333333333;
+	}
+}
+
+scene
+{
+	sphere
+	{
+		center: <0.0, 1.5, 0.0>;
+		radius: 1.0;
+
+		material
+		{
+			pigment: <1.0, 1.0, 1.0>;
+			diffuse: <0.333333, 0.333333, 0.333333>;
+			specular: <1.0, 1.0, 1.0>;
+		}
+	}
+
+	plane
+	{
+		material
+		{
+			pigment: <1.0, 1.0, 1.0>;
+			diffuse: <0.333333, 0.333333, 0.333333>;
+		}
+	}
+
+	point_light
+	{
+		position: <4.0, 8.0, 0.0>;
+		intensity: <1.0, 0.0, 0.0>;
+	}
+
+	point_light
+	{
+		position: <2.0, 8.0, 3.46>;
+		intensity: <1.0, 1.0, 0.0>;
+	}
+
+	point_light
+	{
+		position: <-2.0, 8.0, 3.46>;
+		intensity: <0.0, 1.0, 0.0>;
+	}
+
+	point_light
+	{
+		position: <-4.0, 8.0, 0.0>;
+		intensity: <0.0, 1.0, 1.0>;
+	}
+
+	point_light
+	{
+		position: <-2.0, 8.0, -3.46>;
+		intensity: <0.0, 0.0, 1.0>;
+	}
+
+	point_light
+	{
+		position: <2.0, 8.0, -3.46>;
+		intensity: <1.0, 0.0, 1.0>;
+	}
+}

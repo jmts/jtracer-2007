@@ -29,7 +29,7 @@ class Color
 	Color(float fRed, float fGreen, float fBlue);
 
 	Color(const Color &d);
-	Color (const Vector3 &v);
+	Color(const Vector3 &v);
 
 	float& operator() (unsigned int i);
 	float operator() (unsigned int i) const;

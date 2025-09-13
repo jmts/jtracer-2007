@@ -24,6 +24,33 @@ Surface::Surface()
 
 //////////////////////////////////////////////////////////////////////
 
+Surface& Surface::operator=(const Surface& s)
+{
+	destroy();
+
+	int nWidth = s.getWidth();
+	int nHeight = s.getHeight();
+
+	if (nWidth > 0 && nHeight > 0)
+	{
+		create(nWidth, nHeight);
+
+		for (int y = 0; y < nHeight; y++)
+		{
+			for (int x = 0; x < nWidth; x++)
+			{
+				Color c;
+				s.getPixel(x, y, c);
+				setPixel(x, y, c);
+			}
+		}
+	}
+
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////
+
 Surface::~Surface()
 {
 	destroy();

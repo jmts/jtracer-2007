@@ -30,6 +30,9 @@ class Surface
 
 	public:
 	Surface();
+
+	Surface& operator=(const Surface& s);
+
 	virtual ~Surface();
 
 	bool create(int nWidth, int nHeight);

@@ -1,3 +1,6 @@
 *.bak
 *.exe
+*.tds
+*.obj
 *.bmp
+*.jpg

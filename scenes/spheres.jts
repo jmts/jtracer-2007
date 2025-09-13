@@ -1,0 +1,111 @@
+
+######################################################################
+# A Scene Containing Three Reflective Spheres                        #
+######################################################################
+
+render_settings
+{
+	width: 400;
+	height: 300;
+	ambient_light: <0.0, 0.0, 0.0>;
+	background: <0.0, 0.0, 0.0>;
+	filename: "spheres.bmp";
+	recurse_depth: 5;
+}
+
+cameras
+{
+	perspective_camera
+	{
+		position: <3.0, 2.0, 5.0>;
+		look_at: <0.0, 0.5, 0.0>;
+		aspect: 1.333333333;
+	}
+}
+
+scene
+{
+	sphere
+	{
+		center: <-1.0, 0.5, 0.0>;
+		radius: 0.5;
+
+		material
+		{
+			pigment: <1.0, 0.0, 0.0>;
+			diffuse: <1.0, 1.0, 1.0>;
+			specular: <1.0, 1.0, 1.0>;
+
+			diffuse_k: 1.0;
+			specular_k: 24.0;
+
+			reflection: 0.8;
+		}
+	}
+
+	sphere
+	{
+		center: <0.0, 0.5, 0.0>;
+		radius: 0.5;
+
+		material
+		{
+			pigment: <0.0, 1.0, 0.0>;
+			diffuse: <1.0, 1.0, 1.0>;
+			specular: <1.0, 1.0, 1.0>;
+
+			diffuse_k: 1.0;
+			specular_k: 24.0;
+
+			reflection: 0.8;
+		}
+	}
+
+	sphere
+	{
+		center: <1.0, 0.5, 0.0>;
+		radius: 0.5;
+
+		material
+		{
+			pigment: <0.0, 0.0, 1.0>;
+			diffuse: <1.0, 1.0, 1.0>;
+			specular: <1.0, 1.0, 1.0>;
+
+			diffuse_k: 1.0;
+			specular_k: 24.0;
+	
+			reflection: 0.8;
+		}
+	}
+
+	plane
+	{
+		normal: <0.0, 1.0, 0.0>;
+		distance: 0.0;
+
+		material
+		{
+			pigment: <1.0, 1.0, 1.0>;
+			diffuse: <1.0, 1.0, 1.0>;
+			specular: <1.0, 1.0, 1.0>;
+
+			diffuse_k: 1.0;
+			specular_k: 24.0;
+
+			reflection: 0.8;
+		}
+	}
+
+	point_light
+	{
+		position: <5.0, 5.0, 15.0>;
+		intensity: <1.0, 1.0, 1.0>;
+	}
+
+	point_light
+	{
+		position: <-15.0, 5.0, 5.0>;
+		intensity: <1.0, 1.0, 1.0>;
+	}
+}

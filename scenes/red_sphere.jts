@@ -1,0 +1,50 @@
+
+######################################################################
+# A Scene Rendering Of A Simple Red Sphere                           #
+######################################################################
+
+render_settings
+{
+	width: 400;
+	height: 300;
+	active_camera: "Camera 1";
+	filename: "red_sphere.bmp";
+	ambient_light: <0.2, 0.2, 0.2>;
+	background: <0.0, 0.0, 0.0>;
+}
+
+cameras
+{
+	perspective_camera
+	{
+		name: "Camera 1";
+		position: <0.0, 0.0, 4.0>;
+		look_at: <0.0, 0.0, 0.0>;
+		up: <0.0, 1.0, 0.0>;
+		fov: 45.0;
+		aspect: 1.3333333;
+	}
+}
+
+scene
+{
+	sphere
+	{
+		center: <0.0, 0.0, 0.0>;
+		radius: 0.5;
+	
+		material
+		{
+			pigment: <0.8, 0.0, 0.0>;
+			ambient: <1.0, 1.0, 1.0>;
+			diffuse: <1.0, 1.0, 1.0>;  diffuse_k: 1.0;
+			specular: <1.0, 1.0, 1.0>; specular_k: 64.0;
+		}
+	}
+
+	point_light
+	{
+		position: <2.0, 2.0, 2.0>;
+		intensity: <1.0, 1.0, 1.0>;
+	}
+}

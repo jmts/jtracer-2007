@@ -1,0 +1,40 @@
+
+render_settings
+{
+	width: 640;
+	height: 360;
+	active_camera: "Camera 1";
+	filename: "benchmark.bmp";
+	ambient_light: <1.0, 1.0, 1.0>;
+	background: <0.0, 0.0, 0.0>;
+}
+
+cameras
+{
+	perspective_camera
+	{
+		name: "Camera 1";
+		position: <0.0, 0.0, 4.0>;
+		look_at: <0.0, 0.0, 0.0>;
+		up: <0.0, 1.0, 0.0>;
+		fov: 45.0;
+		aspect: 1.77777778;
+	}
+}
+
+scene
+{
+	sphere
+	{
+		center: <1.0, 1.0, 0.0>;
+		radius: 1.0;
+	
+		material
+		{
+			pigment: <1.0, 0.0, 0.0>;
+			ambient: <1.0, 1.0, 1.0>;
+			diffuse: <0.0, 0.0, 0.0>;  diffuse_k: 1.0;
+			specular: <0.0, 0.0, 0.0>; specular_k: 64.0;
+		}
+	}
+}

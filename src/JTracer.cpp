@@ -79,7 +79,8 @@ int main(int argc, char **argv)
 
 	std::cout << "Writing Image '" << szFileName << "'..."<< std::endl << std::endl;
 
-	if (!BitmapWriter::write(rRenderer.getSurface(), szFileName))
+	BitmapWriter wBitmap;
+	if (!wBitmap.write(rRenderer.getSurface(), szFileName))
 		std::cout << "Image Write Failed..." << std::endl;
 
 	// Print Statistics
